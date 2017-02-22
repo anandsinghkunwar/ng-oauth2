@@ -1,0 +1,27 @@
+{
+  "name": "ng-oauth2",
+  "version": "0.1.0",
+  "authors": [
+    {
+      "name": "Anand Singh Kunwar",
+      "email": "anandkunwar95@gmail.com"
+    }
+  ],
+  "main": ["dist/ng-oauth2.js"],
+  "ignore": [
+    "src",
+    "test",
+    "gulpfile.js",
+    "karma-*.conf.js",
+    "**/.*"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "angular-mocks": ">=1.2.0",
+    "angular-scenario": ">=1.2.0",
+    "angular": ">=1.2.0",
+    "angular-resource": ">=1.2.0",
+    "angular-cookies": ">=1.2.0",
+    "angular-sanitize": ">=1.2.0"
+  }
+}

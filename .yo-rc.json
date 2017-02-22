@@ -1,0 +1,29 @@
+{
+  "generator-angularjs-library": {
+    "props": {
+      "author": {
+        "name": "Anand Singh Kunwar",
+        "email": "anandkunwar95@gmail.com"
+      },
+      "libraryName": {
+        "original": "ng-oauth2",
+        "camelized": "ngOauth2",
+        "dasherized": "ng-oauth2",
+        "slugified": "ng-oauth2",
+        "parts": [
+          "ng",
+          "oauth2"
+        ]
+      },
+      "includeModuleDirectives": true,
+      "includeModuleFilters": true,
+      "includeModuleServices": true,
+      "includeAngularModuleResource": true,
+      "includeAngularModuleCookies": true,
+      "includeAngularModuleSanitize": true,
+      "librarySrcDirectory": "src/ng-oauth2",
+      "libraryUnitTestDirectory": "test/unit/ng-oauth2",
+      "libraryUnitE2eDirectory": "test/e2e/ng-oauth2"
+    }
+  }
+}
