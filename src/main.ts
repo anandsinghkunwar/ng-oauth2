@@ -9,9 +9,5 @@ module todos {
     'use strict';
 
     var ngOAuth2 = angular.module('todomvc', [])
-            .controller('todoCtrl', TodoCtrl)
-            .directive('todoBlur', todoBlur)
-            .directive('todoFocus', todoFocus)
-            .directive('todoEscape', todoEscape)
             .service('todoStorage', TodoStorage);
 }

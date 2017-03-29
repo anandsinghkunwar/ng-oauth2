@@ -10,12 +10,12 @@ module todos {
 
         STORAGE_ID = 'todos-angularjs-typescript';
 
-        get (): TodoItem[] {
-            return JSON.parse(localStorage.getItem(this.STORAGE_ID) || '[]');
+        get (): string {
+            return 'hello';
         }
 
-        put(todos: TodoItem[]) {
-            localStorage.setItem(this.STORAGE_ID, JSON.stringify(todos));
+        put(todos: string) {
+            localStorage.setItem(this.STORAGE_ID, todos);
         }
     }
 }

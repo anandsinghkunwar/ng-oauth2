@@ -2,7 +2,7 @@
 
 module todos {
 	export interface ITodoStorage {
-		get (): TodoItem[];
-		put(todos: TodoItem[]);
+		get (): string;
+		put(todos: string): any;
 	}
 }

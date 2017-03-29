@@ -5,7 +5,11 @@
     "name": "Anand Singh Kunwar",
     "email": "anandkunwar95@gmail.com"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/angular": "^1.6.10",
+    "@types/jquery": "^2.0.41",
+    "angular": "^1.6.2"
+  },
   "devDependencies": {
     "chai": "^1.9.1",
     "chai-jquery": "^1.2.3",
@@ -14,6 +18,7 @@
     "gulp-jshint": "^1.8.4",
     "gulp-plumber": "^0.6.6",
     "gulp-rename": "^1.2.0",
+    "gulp-typescript": "^3.1.6",
     "gulp-uglify": "^0.3.1",
     "jshint-stylish": "^0.4.0",
     "karma": "^0.12.22",
@@ -29,7 +34,9 @@
     "mocha": "^1.21.4",
     "run-sequence": "^1.0.2",
     "sinon": "^1.10.3",
-    "sinon-chai": "^2.5.0"
+    "sinon-chai": "^2.5.0",
+    "typescript": "^2.2.1",
+    "webpack-dev-server": "^1.8.0"
   },
   "engines": {
     "node": ">=0.8.0"
