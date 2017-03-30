@@ -8,6 +8,7 @@ var plumber = require('gulp-plumber');
 var runSequence = require('run-sequence');
 var jshint = require('gulp-jshint');
 var ts = require('gulp-typescript');
+var tslint = require("gulp-tslint");
 
 /**
  * File patterns
@@ -54,7 +55,8 @@ gulp.task('build', function() {
  * Process
  */
 gulp.task('process-all', function(done) {
-    runSequence('jshint', 'test-src', 'build', done);
+    // runSequence('tslint', 'test-src', 'build', done);
+    runSequence('tslint', 'build', done);
 });
 
 /**
@@ -69,6 +71,17 @@ gulp.task('watch', function() {
     // TODO: Tests are right now commented as they will be supported in the future
     // and not right now
     // gulp.watch(path.join(testDirectory, '/**/*.js'), ['test-src']);
+});
+
+/**
+ * Validate source TypeScript
+ */
+gulp.task('tslint', function() {
+    return gulp.src(lintFiles)
+        .pipe(tslint({
+            formatter: "verbose"
+        }))
+        .pipe(tslint.report());
 });
 
 /**
