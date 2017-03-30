@@ -8,7 +8,7 @@ var plumber = require('gulp-plumber');
 var runSequence = require('run-sequence');
 var jshint = require('gulp-jshint');
 var ts = require('gulp-typescript');
-var tslint = require("gulp-tslint");
+var tslint = require('gulp-tslint');
 
 /**
  * File patterns
@@ -79,7 +79,7 @@ gulp.task('watch', function() {
 gulp.task('tslint', function() {
     return gulp.src(lintFiles)
         .pipe(tslint({
-            formatter: "verbose"
+            formatter: 'verbose'
         }))
         .pipe(tslint.report());
 });
