@@ -16,3 +16,6 @@ libpeerconnection.log
 
 # Bower components
 bower_components/
+
+# Ignore dist directory
+dist/
