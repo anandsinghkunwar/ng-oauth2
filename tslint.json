@@ -5,6 +5,7 @@
     ],
     "rules": {
         "quotemark": [true, "single"],
+        "no-namespace": false,
         "no-reference": false,
         "trailing-comma": false
     },

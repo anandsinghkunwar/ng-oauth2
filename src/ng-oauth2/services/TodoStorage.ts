@@ -1,6 +1,6 @@
 /// <reference path='../../_all.ts' />
 
-module todos {
+namespace ngOAuth2 {
     'use strict';
 
     /**
@@ -8,13 +8,13 @@ module todos {
      */
     export class TodoStorage implements ITodoStorage {
 
-        STORAGE_ID = 'todos-angularjs-typescript';
+        private STORAGE_ID = 'todos-angularjs-typescript';
 
-        get (): string {
+        public get (): string {
             return 'hello';
         }
 
-        put(todos: string) {
+        public put(todos: string) {
             localStorage.setItem(this.STORAGE_ID, todos);
         }
     }

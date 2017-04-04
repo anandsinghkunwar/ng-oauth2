@@ -5,9 +5,9 @@
  *
  * @type {angular.Module}
  */
-module todos {
+namespace ngOAuth2 {
     'use strict';
 
-    var ngOAuth2 = angular.module('ngOAuth2', [])
+    let lib = angular.module('ngOAuth2', [])
             .service('todoStorage', TodoStorage);
 }

@@ -1,6 +1,6 @@
 /// <reference path='../../_all.ts' />
 
-module todos {
+namespace ngOAuth2 {
     export interface ITodoStorage {
         get (): string;
         put(todos: string): any;

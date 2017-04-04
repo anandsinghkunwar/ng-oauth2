@@ -10,10 +10,6 @@ var jshint = require('gulp-jshint');
 var ts = require('gulp-typescript');
 var tslint = require('gulp-tslint');
 
-/**
- * File patterns
- **/
-
 // Root directory
 var rootDirectory = path.resolve('./');
 
@@ -36,9 +32,7 @@ var lintFiles = [
     'karma-*.conf.js'
 ].concat(sourceFiles);
 
-/**
- * Creating Typescript Project from tsconfig.json
- **/
+// Creating Typescript Project from tsconfig.json
 var tsProject = ts.createProject('tsconfig.json');
 
 gulp.task('build', function() {
