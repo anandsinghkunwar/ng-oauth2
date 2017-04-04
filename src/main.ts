@@ -9,5 +9,6 @@ namespace ngOAuth2 {
     'use strict';
 
     let lib = angular.module('ngOAuth2', [])
+            .service('httpInterceptor', HttpInterceptor)
             .service('todoStorage', TodoStorage);
 }
