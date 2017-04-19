@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var browserify = require('browserify');
 var karma = require('karma').server;
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');

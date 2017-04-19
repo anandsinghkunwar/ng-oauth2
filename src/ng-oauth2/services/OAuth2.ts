@@ -1,27 +1,22 @@
-/// <reference path='../../_all.ts' />
+import { IOAuth2 } from '../interfaces/IOAuth2';
+/**
+ * Services that persists and retrieves TODOs from localStorage.
+ */
+export class OAuth2 implements IOAuth2 {
+    // TODO: Complete Storage, add injections etc.
 
-namespace ngOAuth2 {
-    'use strict';
+    constructor() {
+        return;
+    }
+    public get(key: string): string {
+        return 'hello';
+    }
 
-    /**
-     * Services that persists and retrieves TODOs from localStorage.
-     */
-    export class OAuth2 implements IOAuth2 {
-        // TODO: Complete Storage, add injections etc.
+    public put(key: string, value: string) {
+        return;
+    }
 
-        constructor() {
-            return;
-        }
-        public get(key: string): string {
-            return 'hello';
-        }
-
-        public put(key: string, value: string) {
-            return;
-        }
-
-        public clear(key: string) {
-            return;
-        }
+    public clear(key: string) {
+        return;
     }
 }

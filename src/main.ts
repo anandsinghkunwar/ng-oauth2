@@ -1,15 +1,14 @@
-/// <reference path='_all.ts' />
+import * as ng from 'angular';
+import { HttpInterceptor } from './ng-oauth2/services/HttpInterceptor';
+import { OAuth2 } from './ng-oauth2/services/OAuth2';
+import { Storage } from './ng-oauth2/services/Storage';
 
 /**
  * The main ng-oauth2 app module.
  *
- * @type {angular.Module}
  */
-namespace ngOAuth2 {
-    'use strict';
 
-    let lib = angular.module('ngOAuth2', [])
-            .service('httpInterceptor', HttpInterceptor)
-            .service('storage', Storage)
-            .service('main', OAuth2);
-}
+let lib = ng.module('ngOAuth2', [])
+    .service('httpInterceptor', HttpInterceptor)
+    .service('storage', Storage)
+    .service('main', OAuth2);

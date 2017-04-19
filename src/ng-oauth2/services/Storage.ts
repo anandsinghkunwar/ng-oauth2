@@ -1,7 +1,4 @@
-/// <reference path='../../_all.ts' />
-
-namespace ngOAuth2 {
-    'use strict';
+import {IStorage} from '../interfaces/IStorage';
 
     /**
      * Services that persists and retrieves TODOs from localStorage.
@@ -24,4 +21,3 @@ namespace ngOAuth2 {
             return;
         }
     }
-}
