@@ -10,5 +10,6 @@ namespace ngOAuth2 {
 
     let lib = angular.module('ngOAuth2', [])
             .service('httpInterceptor', HttpInterceptor)
-            .service('storage', Storage);
+            .service('storage', Storage)
+            .service('main', OAuth2);
 }
