@@ -6,25 +6,24 @@ namespace ngOAuth2 {
     /**
      * Services that persists and retrieves TODOs from localStorage.
      */
-    export class HttpInterceptor implements IHttpInterceptor {
+    export class HttpInterceptor implements angular.IHttpInterceptor {
 
-        public static $inject = [
-            '$scope'
-        ];
-        private STORAGE_ID = 'todos-angularjs-typescript';
-
-        constructor(
-            private $scope: ng.IScope
-        ) {
-
+        static Factory(): HttpInterceptor {
+            // TODO: Add any dependencies by injections
+            return new HttpInterceptor();
         }
 
-        public get(): string {
-            return 'hello';
+        constructor() {
         }
 
-        public put(todos: string) {
-            localStorage.setItem(this.STORAGE_ID, todos);
-        }
+        /*
+         * For modifying outgoing requests to the server
+         */
+        request = (config: angular.IRequestConfig): angular.IRequestConfig => {
+
+          // TODO: Check if config contains a skipping authorization and modify config
+
+          return config;
+        };
     }
 }
