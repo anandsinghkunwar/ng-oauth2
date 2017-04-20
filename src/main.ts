@@ -1,4 +1,3 @@
-import * as ng from 'angular';
 import { HttpInterceptor } from './ng-oauth2/services/HttpInterceptor';
 import { OAuth2 } from './ng-oauth2/services/OAuth2';
 import { Storage } from './ng-oauth2/services/Storage';
