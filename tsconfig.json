@@ -6,11 +6,11 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "sourceMap": true,
-        "outDir": "dist",
-        "typeRoots" : ["./node_modules/@types"]
+        "outDir": "build",
+        "typeRoots": ["./node_modules/@types"]
     },
     "files": [
-        "src/main.ts"
-    ],
-
+        "src/main.ts",
+        "src/index.d.ts"
+    ]
 }
