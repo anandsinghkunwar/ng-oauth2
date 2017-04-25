@@ -1,6 +1,6 @@
 
 /**
- * Services that persists and retrieves TODOs from localStorage.
+ * Services that intercepts HTTP/s requests and adds the header field in them
  */
 export class HttpInterceptor implements ng.IHttpInterceptor {
 

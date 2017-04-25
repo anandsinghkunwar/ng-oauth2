@@ -1,8 +1,9 @@
-import {IStorage} from '../interfaces/IStorage';
+import {ISocialOAuth2} from '../interfaces/ISocialOAuth2';
+
 /**
- * Services that persists and retrieves TODOs from localStorage.
+ * Service that start the social aAuth2 authentication process
  */
-export class Storage implements IStorage {
+export class SocialOAuth2 implements ISocialOAuth2 {
     // TODO: Complete Storage, add injections etc.
 
     constructor() {
