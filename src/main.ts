@@ -13,4 +13,7 @@ let lib = angular.module('ngOAuth2', [])
     .constant('config', Config.getConfig)
     .service('httpInterceptor', HttpInterceptor)
     .service('storage', Storage)
-    .service('main', OAuth2);
+    .service('main', OAuth2)
+    .config(['$httpProvider', ($httpProvider: angular.IHttpProvider) => {
+        $httpProvider.interceptors.push(HttpInterceptor.Factory);
+    }]);

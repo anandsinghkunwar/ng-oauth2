@@ -21,6 +21,7 @@ export class HttpInterceptor implements angular.IHttpInterceptor {
 
         // TODO: Check if config contains a skipping authorization and modify config
         config.headers['Test'] = 'Hello';
+        console.log(config);
         return config;
     }
 }
