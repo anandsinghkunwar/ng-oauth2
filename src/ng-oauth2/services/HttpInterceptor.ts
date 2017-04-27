@@ -13,7 +13,7 @@ export class HttpInterceptor implements ng.IHttpInterceptor {
         return;
     }
 
-    /*
+    /**
      * For modifying outgoing requests to the server
      */
     // TODO: Investigate if public/private/protected

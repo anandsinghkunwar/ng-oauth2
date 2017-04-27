@@ -7,11 +7,10 @@ import { SocialOAuth2 } from './SocialOAuth2';
  */
 export class OAuth2 implements IOAuth2 {
     // TODO: Complete Storage, add injections etc.
+    public static $inject = ['$q', '$http'];
 
-    $q: ng.IQService;
-    $http: ng.IHttpService;
-
-    static $inject = ['$q', '$http'];
+    private $q: ng.IQService;
+    private $http: ng.IHttpService;
 
     constructor($q: ng.IQService, $http: ng.IHttpService) {
         this.$q = $q;
@@ -23,7 +22,7 @@ export class OAuth2 implements IOAuth2 {
         let deferred = this.$q.defer();
         let provider = null;
 
-        switch(type) {
+        switch (type) {
             // TODO: Is there a better way to do this?
             case 'social':
                 provider = new SocialOAuth2();
@@ -32,6 +31,9 @@ export class OAuth2 implements IOAuth2 {
             case 'local':
                 provider = new LocalOAuth2();
                 break;
+
+            default:
+                throw 'Not Known Type of Login';
         }
 
         /* provider.start(xyz).then({
