@@ -8,8 +8,7 @@ import { Storage } from './ng-oauth2/services/Storage';
  * The main ng-oauth2 app module.
  *
  */
-
-let lib = ng.module('ngOAuth2', [])
+let lib = angular.module('ngOAuth2', [])
     .provider('$oauth2', OAuth2Provider)
     .constant('config', Config.getConfig)
     .service('httpInterceptor', HttpInterceptor)

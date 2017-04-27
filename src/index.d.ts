@@ -1,4 +1,4 @@
 declare global {
-  const ng: ng.IAngularStatic;
+  const angular: angular.IAngularStatic;
 }
 export {};

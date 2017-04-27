@@ -10,7 +10,7 @@ export class Storage implements IStorage {
     private config: Config;
     private $window: any;
 
-    constructor($window: ng.IWindowService, config: Config) {
+    constructor($window: angular.IWindowService, config: Config) {
         this.config = config;
         this.$window = $window;
         if (this.config.storageType !== 'localStorage' &&

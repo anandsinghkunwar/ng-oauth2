@@ -2,7 +2,7 @@
 /**
  * Services that intercepts HTTP/s requests and adds the header field in them
  */
-export class HttpInterceptor implements ng.IHttpInterceptor {
+export class HttpInterceptor implements angular.IHttpInterceptor {
 
     public static Factory(): HttpInterceptor {
         // TODO: Add any dependencies by injections
@@ -17,7 +17,7 @@ export class HttpInterceptor implements ng.IHttpInterceptor {
      * For modifying outgoing requests to the server
      */
     // TODO: Investigate if public/private/protected
-    public request = (config: ng.IRequestConfig): ng.IRequestConfig => {
+    public request = (config: angular.IRequestConfig): angular.IRequestConfig => {
 
         // TODO: Check if config contains a skipping authorization and modify config
         config.headers['Test'] = 'Hello';

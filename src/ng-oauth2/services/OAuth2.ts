@@ -9,16 +9,16 @@ export class OAuth2 implements IOAuth2 {
     // TODO: Complete Storage, add injections etc.
     public static $inject = ['$q', '$http'];
 
-    private $q: ng.IQService;
-    private $http: ng.IHttpService;
+    private $q: angular.IQService;
+    private $http: angular.IHttpService;
 
-    constructor($q: ng.IQService, $http: ng.IHttpService) {
+    constructor($q: angular.IQService, $http: angular.IHttpService) {
         this.$q = $q;
         this.$http = $http;
         return;
     }
 
-    public login(type: string, user: any): ng.IPromise<{}> {
+    public login(type: string, user: any): angular.IPromise<{}> {
         let deferred = this.$q.defer();
         let provider = null;
 

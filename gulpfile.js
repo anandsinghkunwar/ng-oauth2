@@ -10,6 +10,9 @@ var runSequence = require('run-sequence');
 var jshint = require('gulp-jshint');
 var ts = require('gulp-typescript');
 var tslint = require('gulp-tslint');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var sourcemaps = require('gulp-sourcemaps');
 
 // Root directory
 var rootDirectory = path.resolve('./');
@@ -38,12 +41,34 @@ var tsProject = ts.createProject('tsconfig.json');
 
 gulp.task('build', function() {
     var tsResult = gulp.src(sourceFiles)
-                       .pipe(tsProject());
-        // .pipe(concat('ng-oauth2.js'))
-    return tsResult.js.pipe(gulp.dest('./dist/'))
-                      .pipe(uglify())
-                      .pipe(rename('ng-oauth2.min.js'))
-                      .pipe(gulp.dest('./dist'));
+        .pipe(tsProject());
+    // .pipe(concat('ng-oauth2.js'))
+    return tsResult.js.pipe(gulp.dest('./build/'))
+        .pipe(uglify())
+        .pipe(rename('ng-oauth2.min.js'))
+        .pipe(gulp.dest('./build/'));
+});
+
+gulp.task('browserify', function() {
+    var tsResult = gulp.src(sourceFiles)
+        .pipe(tsProject());
+    var b = browserify({
+        entries: ['./build/main.js']
+    });
+    return b.bundle()
+        .pipe(source('ng-oauth2.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({
+            loadMaps: true
+        }))
+        .pipe(gulp.dest('./dist/'))
+        // Add transformation tasks to the pipeline here.
+        .pipe(uglify())
+        // .on('error', gutil.log)
+        // .pipe(sourcemaps.write('./dist/'))
+        .pipe(rename('ng-oauth2.min.js'))
+        .pipe(gulp.dest('./dist/'))
+        .pipe(gulp.dest('./examples/frontend/bower_components/'));
 });
 
 /**
@@ -51,7 +76,7 @@ gulp.task('build', function() {
  */
 gulp.task('process-all', function(done) {
     // runSequence('tslint', 'test-src', 'build', done);
-    runSequence('tslint', 'build', done);
+    runSequence('tslint', 'build', 'browserify', done);
 });
 
 /**

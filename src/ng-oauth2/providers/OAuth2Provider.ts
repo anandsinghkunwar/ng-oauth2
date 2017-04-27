@@ -4,7 +4,7 @@ import {IOAuth2Provider} from '../interfaces/IOAuth2Provider';
 /**
  * Service Provider for Configurations of the Module
  */
-export class OAuth2Provider implements ng.IServiceProvider, IOAuth2Provider {
+export class OAuth2Provider implements angular.IServiceProvider, IOAuth2Provider {
     public static $inject = ['config'];
     private config: Config;
 

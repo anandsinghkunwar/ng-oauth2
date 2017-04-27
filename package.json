@@ -25,6 +25,7 @@
     "gulp-jshint": "^2.0.4",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.0",
+    "gulp-sourcemaps": "^2.6.0",
     "gulp-tslint": "^7.1.0",
     "gulp-typescript": "^3.1.6",
     "gulp-uglify": "^2.1.2",
@@ -47,6 +48,8 @@
     "sinon-chai": "^2.5.0",
     "tslint": "~4.0.0",
     "typescript": "^2.2.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
     "webpack": "^2.3.2",
     "webpack-dev-server": "^2.4.2"
   },
