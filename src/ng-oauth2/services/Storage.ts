@@ -13,9 +13,10 @@ export class Storage implements IStorage {
     constructor($window: angular.IWindowService, config: Config) {
         this.config = config;
         this.$window = $window;
+        console.log(this.config);
         if (this.config.storageType !== 'localStorage' &&
             this.config.storageType !== 'sessionStorage') {
-            throw 'Error due to invalid storage type';
+            // throw 'Error due to invalid storage type(1)';
         }
         // return;
     }
@@ -31,7 +32,7 @@ export class Storage implements IStorage {
                 break;
 
             default:
-                throw 'Error due to invalid storage type';
+                throw 'Error due to invalid storage type(2)';
         }
         return storage[key];
     }

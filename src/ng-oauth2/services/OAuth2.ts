@@ -1,3 +1,4 @@
+import { Config } from '../constants/ConfigDefaults';
 import { IOAuth2 } from '../interfaces/IOAuth2';
 import { LocalOAuth2 } from './LocalOAuth2';
 import { SocialOAuth2 } from './SocialOAuth2';
@@ -7,15 +8,16 @@ import { SocialOAuth2 } from './SocialOAuth2';
  */
 export class OAuth2 implements IOAuth2 {
     // TODO: Complete Storage, add injections etc.
-    public static $inject = ['$q', '$http'];
+    public static $inject = ['$q', '$http', 'config'];
 
     private $q: angular.IQService;
     private $http: angular.IHttpService;
+    private config: Config;
 
-    constructor($q: angular.IQService, $http: angular.IHttpService) {
+    constructor($q: angular.IQService, $http: angular.IHttpService, config: Config) {
         this.$q = $q;
         this.$http = $http;
-        return;
+        this.config = config;
     }
 
     public login(type: string, user: any): angular.IPromise<{}> {

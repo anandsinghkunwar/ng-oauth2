@@ -17,6 +17,10 @@ export class OAuth2Provider implements angular.IServiceProvider, IOAuth2Provider
         // this.config = Config.getConfig();
     }
 
+    public test() {
+        this.config.storageType = 'sessionStorage';
+    }
+
     public $get() {
         return {
             login: () => {
@@ -30,4 +34,4 @@ export class OAuth2Provider implements angular.IServiceProvider, IOAuth2Provider
 
 }
 
-OAuth2Provider.prototype.$get.$inject = ['main'];
+// OAuth2Provider.prototype.$get.$inject = [];

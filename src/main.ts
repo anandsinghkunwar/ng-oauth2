@@ -9,11 +9,11 @@ import { Storage } from './ng-oauth2/services/Storage';
  *
  */
 let lib = angular.module('ngOAuth2', [])
-    .provider('$oauth2', OAuth2Provider)
-    .constant('config', Config.getConfig)
-    .service('httpInterceptor', HttpInterceptor)
-    .service('storage', Storage)
+    .provider('$oauth2', ['config', (config: Config) => new OAuth2Provider(config)])
+    .constant('config', Config.getConfig())
     .service('main', OAuth2)
+    .service('storage', Storage)
+    .service('httpInterceptor', HttpInterceptor)
     .config(['$httpProvider', ($httpProvider: angular.IHttpProvider) => {
         $httpProvider.interceptors.push(HttpInterceptor.Factory);
     }]);
