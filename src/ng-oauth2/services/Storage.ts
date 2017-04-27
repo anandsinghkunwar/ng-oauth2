@@ -54,6 +54,23 @@ export class Storage implements IStorage {
         return;
     }
 
+    public isSet(key: string) {
+        let storage = null;
+        switch (this.config.storageType) {
+            case 'localStorage':
+                storage = this.$window.localStorage;
+                break;
+
+            case 'sessionStorage':
+                storage = this.$window.sessionStorage;
+                break;
+
+            default:
+                throw 'Error due to invalid storage type';
+        }
+        return (storage.getItem(key) === null) ? false : true;
+    }
+
     public clear(key: string) {
         let storage = null;
         switch (this.config.storageType) {
