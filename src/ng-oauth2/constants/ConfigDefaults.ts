@@ -6,12 +6,17 @@ export class Config {
         return new Config();
     }
 
-    public loginUrl = '/auth/login';
-    public signupUrl = '/auth/signup';
-    public unlinkUrl = '/auth/unlink/';
+    public baseUrl = 'http://localhost:3000';
+    public loginMethod = 'POST';
+    public loginUrl = '/login';
+    public loginEventName = 'oauth2:login';
+    public signupMethod = 'POST';
+    public signupUrl = '/signup';
+    public logoutUrl = '/logout';
+    public logoutEventName = 'oauth2:logout';
     public storageType = 'localStorage';
     public tokenName = 'AccessToken';
+    public refreshTokenName = 'RefreshToken';
     public tokenHeader = 'Authorization';
     public tokenType = 'Bearer';
-
 }

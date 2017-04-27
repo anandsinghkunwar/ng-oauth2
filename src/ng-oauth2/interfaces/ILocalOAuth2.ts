@@ -1,5 +1,6 @@
 export interface ILocalOAuth2 {
-    get(key: string): string;
-    put(key: string, value: string): any;
-    clear(key: string): any;
+
+    login(user: any): angular.IHttpPromise<any>;
+
+    signup(user: any): angular.IHttpPromise<any>;
 }

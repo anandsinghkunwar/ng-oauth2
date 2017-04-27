@@ -5,19 +5,15 @@ import {ISocialOAuth2} from '../interfaces/ISocialOAuth2';
  */
 export class SocialOAuth2 implements ISocialOAuth2 {
     // TODO: Complete Storage, add injections etc.
+    public static $inject = ['$http'];
 
-    constructor() {
-        return;
-    }
-    public get(key: string): string {
-        return 'hello';
-    }
+    private $http: angular.IHttpService;
 
-    public put(key: string, value: string) {
-        return;
+    constructor($http: angular.IHttpService) {
+        this.$http = $http;
     }
 
-    public clear(key: string) {
-        return;
+    public login(user: any): angular.IHttpPromise<any> {
+        return this.$http({method: 'GET', url: '/'});
     }
 }
