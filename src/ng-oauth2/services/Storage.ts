@@ -16,9 +16,8 @@ export class Storage implements IStorage {
         console.log(this.config);
         if (this.config.storageType !== 'localStorage' &&
             this.config.storageType !== 'sessionStorage') {
-            // throw 'Error due to invalid storage type(1)';
+            throw 'Error due to invalid storage type(1)';
         }
-        // return;
     }
     public get(key: string): string {
         let storage = null;

@@ -21,8 +21,9 @@ export class HttpInterceptor implements angular.IHttpInterceptor {
      */
     // TODO: Investigate if public/private/protected
     public request = (config: angular.IRequestConfig): angular.IRequestConfig => {
-        console.log(this.storage);
-        if (config.data['token'] === false) {
+        let configCopy: any = config;
+
+        if (configCopy['token'] === false) {
             return config;
         }
         // If does not have token as false
