@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html ng-app="test">
+    <head>
+        <meta charset="utf-8">
+        <title>ngOAuth2 Test</title>
+        <link rel="stylesheet" type="text/css" href="angular-toastr/dist/angular-toastr.min.css">
+        <script type="text/javascript" src="angular/angular.min.js"></script>
+        <script type="text/javascript" src="angular-animate/angular-animate.min.js"></script>
+        <script type="text/javascript" src="angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+        <script type="text/javascript" src="ng-oauth2.js">
+        </script>
+
+        <script type="text/javascript">
+            angular.module('test', ['ngOAuth2', 'ngAnimate', 'toastr'])
+            .config(function($oauth2Provider) {
+                console.log($oauth2Provider);
+                $oauth2Provider.configureFacebook({
+                            appId: '438920019774256'
+                        });
+                        $oauth2Provider.configureGoogle({
+                            clientId: '1234567'
+                        });
+            })
+            .controller('ctrl', function($scope, $http, $oauth2, toastr) {
+                console.log($oauth2);
+                $scope.model = {};
+                $scope.login2 = function() {
+                    $oauth2.login('social', {provider: 'facebook'});
+                }
+                $scope.login = function() {
+                    console.log('Submitting');
+                    $http({
+                        method: 'POST',
+                        url: '/login',
+                        data: {
+                            username: $scope.model.username,
+                            password: $scope.model.password
+                        }
+                    }).then(
+                        function(response) {
+                            console.log(response, 'success');
+                            toastr.success(response);
+                        }
+                        ,
+                        function(response) {
+                            // console.log(response, 'error');
+                            toastr.error(response);
+                        })
+                };
+                $scope.signup = function() {
+                    console.log('Submitting');
+                    $http({
+                        method: 'GET',
+                        url: '/'
+                    }).then({
+                        function(response) {
+                            console.log(response, 'success');
+                        }
+                    },
+                        function(response) {
+                            console.log(response, 'error')
+                        })
+                };
+                $scope.logout = function() {
+                    console.log('Submitting');
+                    $http({
+                        method: 'GET',
+                        url: '/'
+                    }).then({
+                        function(response) {
+                            console.log(response, 'success');
+                        }
+                    },
+                        function(response) {
+                            console.log(response, 'error')
+                        })
+                };
+                $scope.fbSignIn = function() {
+                    console.log('Submitting');
+                    $http({
+                        method: 'GET',
+                        url: '/facebook'
+                    }).then({
+                        function(response) {
+                            console.log(response, 'success');
+                        }
+                    },
+                        function(response) {
+                            console.log(response, 'error')
+                        })
+                };
+                $scope.googleSignIn = function() {
+                    console.log('Submitting');
+                    $http({
+                        method: 'GET',
+                        url: '/google'
+                    }).then({
+                        function(response) {
+                            console.log(response, 'success');
+                        }
+                    },
+                        function(response) {
+                            console.log(response, 'error')
+                        })
+                };
+                $scope.protectedResource = function() {
+                    console.log('Submitting');
+                    $http({
+                        method: 'GET',
+                        url: '/google'
+                    }).then({
+                        function(response) {
+                            console.log(response, 'success');
+                        }
+                    },
+                        function(response) {
+                            console.log(response, 'error')
+                        })
+                };
+                $scope.freeResource = function() {
+                    console.log('Submitting');
+                    $http({
+                        method: 'GET',
+                        url: '/google'
+                    }).then({
+                        function(response) {
+                            console.log(response, 'success');
+                        }
+                    },
+                        function(response) {
+                            console.log(response, 'error')
+                        })
+                };
+            });
+        </script>
+    </head>
+    <body ng-controller="ctrl">
+        <form class="">
+            <div class="">
+                <input type="text" name="" value="" placeholder="username" ng-model="model.username">
+            </div>
+            <div class="">
+                <input type="password" name="" value="" placeholder="password" ng-model="model.password">
+            </div>
+            <div class="">
+                <button type="button" name="button" ng-click="login2()">Submit</button>
+            </div>
+        </form>
+    </body>
+</html>
