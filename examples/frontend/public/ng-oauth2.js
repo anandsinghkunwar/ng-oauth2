@@ -36,15 +36,19 @@ var Config = (function () {
         this.loginMethod = 'POST';
         this.loginUrl = '/login';
         this.loginEventName = 'oauth2:login';
+        this.loginEventFailureName = 'oauth2:login:error';
         this.signupMethod = 'POST';
         this.signupUrl = '/signup';
+        this.logoutMethod = 'POST';
         this.logoutUrl = '/logout';
         this.logoutEventName = 'oauth2:logout';
+        this.logoutFailureEventName = 'oauth2:logout:error';
         this.storageType = 'localStorage';
         this.tokenName = 'AccessToken';
         this.refreshTokenName = 'RefreshToken';
         this.tokenHeader = 'Authorization';
         this.tokenType = 'Bearer';
+        this.tokenErrorEventName = 'oauth2:token:error';
         this.providers = {
             facebook: {
                 name: 'facebook',
@@ -103,10 +107,21 @@ var OAuth2Provider = (function () {
     OAuth2Provider.prototype.configureGoogle = function (config) {
         angular.extend(this.config.providers.google, config);
     };
-    OAuth2Provider.prototype.$get = function (main) {
+    OAuth2Provider.prototype.$get = function ($http, $rootScope, main, config, shared) {
         return {
             login: function (type, user) { return main.login(type, user); },
             logout: function () {
+                // HACK FIXME
+                $http({
+                    method: config.logoutMethod,
+                    url: config.baseUrl + config.logoutUrl
+                })
+                    .then(function (response) {
+                    shared.unsetToken();
+                }, function (errorResponse) {
+                    console.log(errorResponse);
+                    $rootScope.$broadcast(config.logoutFailureEventName, errorResponse);
+                });
                 console.log('In Logout');
             }
         };
@@ -115,7 +130,7 @@ var OAuth2Provider = (function () {
 }());
 OAuth2Provider.$inject = ['config'];
 exports.OAuth2Provider = OAuth2Provider;
-OAuth2Provider.prototype.$get.$inject = ['main'];
+OAuth2Provider.prototype.$get.$inject = ['$http', '$rootScope', 'main', 'config', 'shared'];
 
 },{}],4:[function(require,module,exports){
 "use strict";
@@ -124,7 +139,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Services that intercepts HTTP/s requests and adds the header field in them
  */
 var HttpInterceptor = (function () {
-    function HttpInterceptor(storage, config) {
+    function HttpInterceptor($rootScope, $q, storage, config) {
         var _this = this;
         /**
          * For modifying outgoing requests to the server
@@ -141,17 +156,32 @@ var HttpInterceptor = (function () {
                 + _this.storage.get(_this.config.tokenName);
             return config;
         };
+        this.responseError = function (responseFailure) {
+            if (responseFailure.status === 401) {
+                // FIXME HACK
+                console.log(responseFailure);
+                if (responseFailure.config.url === _this.config.baseUrl + _this.config.loginUrl) {
+                    _this.$rootScope.$broadcast(_this.config.loginEventFailureName, responseFailure);
+                }
+                else {
+                    _this.$rootScope.$broadcast(_this.config.tokenErrorEventName, responseFailure);
+                }
+            }
+            return _this.$q.reject(responseFailure);
+        };
         this.storage = storage;
         this.config = config;
+        this.$rootScope = $rootScope;
+        this.$q = $q;
     }
-    HttpInterceptor.Factory = function (storage, config) {
-        return new HttpInterceptor(storage, config);
+    HttpInterceptor.Factory = function ($rootScope, $q, storage, config) {
+        return new HttpInterceptor($rootScope, $q, storage, config);
     };
     return HttpInterceptor;
 }());
-HttpInterceptor.$inject = ['storage'];
+HttpInterceptor.$inject = ['$rootScope', '$q', 'storage', 'config'];
 exports.HttpInterceptor = HttpInterceptor;
-HttpInterceptor.Factory.$inject = ['storage', 'config'];
+HttpInterceptor.Factory.$inject = ['$rootScope', '$q', 'storage', 'config'];
 
 },{}],5:[function(require,module,exports){
 "use strict";
@@ -177,6 +207,7 @@ var LocalOAuth2 = (function () {
             _this.shared.setToken(response);
             deferred.resolve(response);
         }, function (errorResponse) {
+            console.log('I am Here');
             deferred.reject(errorResponse);
         });
         return deferred.promise;
@@ -413,7 +444,7 @@ var Shared = (function () {
             this.storage.put(this.config.refreshTokenName, response.data['refresh_token']);
         }
         if (broadcast === true) {
-            this.$rootScope.$broadcast(this.config.loginEventName);
+            this.$rootScope.$broadcast(this.config.loginEventName, response);
         }
     };
     Shared.prototype.unsetToken = function () {
@@ -427,7 +458,8 @@ var Shared = (function () {
             this.storage.clear(this.config.tokenName);
         }
         if (broadcast === true) {
-            this.$rootScope.$broadcast(this.config.logoutEventName);
+            // FIXME
+            this.$rootScope.$broadcast(this.config.logoutEventName, {});
         }
     };
     return Shared;

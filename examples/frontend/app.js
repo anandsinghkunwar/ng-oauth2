@@ -26,7 +26,6 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 
 app.post('/login', function(req, res) {
-    console.log(req.body);
     if (req.body.username == user.username &&
         req.body.password == user.password) {
         res.send(data);
@@ -41,8 +40,8 @@ app.post('/logout', function(req, res) {
 });
 
 app.get('/privateData', function(req, res) {
-    if (req.headers.Authorization != undefined) {
-        if (req.headers.Authorization == data.access_token) {
+    if (req.headers.authorization != undefined) {
+        if (req.headers.authorization == 'Bearer ' + data.access_token) {
             res.send(privateData);
         }
         res.status(403).send({error: 'Access Token is Invalid!'});
@@ -79,5 +78,5 @@ app.use(express.static('bower_components'));
 // })
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
+  console.log('UGP Demo app listening on port 3000!')
 })

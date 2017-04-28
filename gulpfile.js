@@ -62,13 +62,13 @@ gulp.task('browserify', function() {
             loadMaps: true
         }))
         .pipe(gulp.dest('./dist/'))
+        .pipe(gulp.dest('./examples/frontend/public/'))
         // Add transformation tasks to the pipeline here.
         .pipe(uglify())
         // .on('error', gutil.log)
         // .pipe(sourcemaps.write('./dist/'))
         .pipe(rename('ng-oauth2.min.js'))
-        .pipe(gulp.dest('./dist/'))
-        .pipe(gulp.dest('./examples/frontend/bower_components/'));
+        .pipe(gulp.dest('./dist/'));
 });
 
 /**
