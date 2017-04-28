@@ -5,18 +5,28 @@ import {Storage} from './Storage';
  * Services that intercepts HTTP/s requests and adds the header field in them
  */
 export class HttpInterceptor implements angular.IHttpInterceptor {
-    public static $inject = ['storage'];
+    public static $inject = ['$rootScope', '$q', 'storage', 'config'];
 
-    public static Factory(storage: Storage, config: Config): HttpInterceptor {
-        return new HttpInterceptor(storage, config);
+    public static Factory($rootScope: angular.IRootScopeService,
+                          $q: angular.IQService,
+                          storage: Storage,
+                          config: Config): HttpInterceptor {
+        return new HttpInterceptor($rootScope, $q, storage, config);
     }
 
     private storage: Storage;
     private config: Config;
+    private $rootScope: angular.IRootScopeService;
+    private $q: angular.IQService;
 
-    constructor(storage: Storage, config: Config) {
+    constructor($rootScope: angular.IRootScopeService,
+                $q: angular.IQService,
+                storage: Storage,
+                config: Config) {
         this.storage = storage;
         this.config = config;
+        this.$rootScope = $rootScope;
+        this.$q = $q;
     }
 
     /**
@@ -31,11 +41,18 @@ export class HttpInterceptor implements angular.IHttpInterceptor {
             return config;
         }
         config.headers[this.config.tokenHeader] = this.config.tokenType
-                                                  + ' '
-                                                  + this.storage.get(this.config.tokenName);
+            + ' '
+            + this.storage.get(this.config.tokenName);
 
         return config;
     }
+    public responseError = (responseFailure: any): angular.IPromise<any> => {
+        if (responseFailure.status === 401) {
+            // FIXME HACK
+            this.$rootScope.$broadcast(this.config.tokenErrorEventName, responseFailure);
+        }
+        return this.$q.reject(responseFailure);
+    }
 }
 
-HttpInterceptor.Factory.$inject = ['storage', 'config'];
+HttpInterceptor.Factory.$inject = ['$rootScope', '$q', 'storage', 'config'];

@@ -10,15 +10,19 @@ export class Config {
     public loginMethod = 'POST';
     public loginUrl = '/login';
     public loginEventName = 'oauth2:login';
+    public loginEventFailureName = 'oauth2:login:error';
     public signupMethod = 'POST';
     public signupUrl = '/signup';
+    public logoutMethod = 'POST';
     public logoutUrl = '/logout';
     public logoutEventName = 'oauth2:logout';
+    public logoutFailureEventName = 'oauth2:logout:error';
     public storageType = 'localStorage';
     public tokenName = 'AccessToken';
     public refreshTokenName = 'RefreshToken';
     public tokenHeader = 'Authorization';
     public tokenType = 'Bearer';
+    public tokenErrorEventName = 'oauth2:token:error';
 
     public providers = {
         facebook: {

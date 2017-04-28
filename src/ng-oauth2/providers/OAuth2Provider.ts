@@ -1,6 +1,7 @@
 import {Config} from '../constants/ConfigDefaults';
 import {IOAuth2Provider} from '../interfaces/IOAuth2Provider';
 import {OAuth2} from '../services/OAuth2';
+import {Shared} from '../services/Shared';
 
 /**
  * Service Provider for Configurations of the Module
@@ -25,10 +26,25 @@ export class OAuth2Provider implements angular.IServiceProvider, IOAuth2Provider
         angular.extend(this.config.providers.google, config);
     }
 
-    public $get(main: OAuth2) {
+    public $get($http: angular.IHttpService,
+                $rootScope: angular.IRootScopeService,
+                main: OAuth2,
+                config: Config,
+                shared: Shared) {
         return {
             login: (type: string, user: any) => main.login(type, user),
             logout: () => {
+                // HACK FIXME
+                $http({
+                    method: config.logoutMethod,
+                    url: config.baseUrl + config.logoutUrl
+                })
+                    .then((response) => {
+                        shared.unsetToken();
+                    }, (errorResponse) => {
+                        console.log(errorResponse);
+                        $rootScope.$broadcast(config.logoutFailureEventName);
+                    });
                 console.log('In Logout');
             }
         };
@@ -36,4 +52,4 @@ export class OAuth2Provider implements angular.IServiceProvider, IOAuth2Provider
 
 }
 
-OAuth2Provider.prototype.$get.$inject = ['main'];
+OAuth2Provider.prototype.$get.$inject = ['$http', '$rootScope', 'main', 'config', 'shared'];

@@ -35,6 +35,7 @@ export class LocalOAuth2 implements ILocalOAuth2 {
             deferred.resolve(response);
         },
         (errorResponse) => {
+            console.log('I am Here');
             deferred.reject(errorResponse);
         });
         return deferred.promise;
