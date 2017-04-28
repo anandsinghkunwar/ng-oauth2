@@ -29,7 +29,7 @@ export class Shared implements IShared {
                 response.data['refresh_token']);
         }
         if (broadcast === true) {
-            this.$rootScope.$broadcast(this.config.loginEventName);
+            this.$rootScope.$broadcast(this.config.loginEventName, response);
         }
     }
 
@@ -45,7 +45,8 @@ export class Shared implements IShared {
             this.storage.clear(this.config.tokenName);
         }
         if (broadcast === true) {
-            this.$rootScope.$broadcast(this.config.logoutEventName);
+            // FIXME
+            this.$rootScope.$broadcast(this.config.logoutEventName, {});
         }
     }
 }

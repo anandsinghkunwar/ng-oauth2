@@ -43,7 +43,7 @@ export class OAuth2Provider implements angular.IServiceProvider, IOAuth2Provider
                         shared.unsetToken();
                     }, (errorResponse) => {
                         console.log(errorResponse);
-                        $rootScope.$broadcast(config.logoutFailureEventName);
+                        $rootScope.$broadcast(config.logoutFailureEventName, errorResponse);
                     });
                 console.log('In Logout');
             }
