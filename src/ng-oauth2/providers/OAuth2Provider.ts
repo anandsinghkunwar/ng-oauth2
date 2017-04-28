@@ -1,5 +1,6 @@
 import {Config} from '../constants/ConfigDefaults';
 import {IOAuth2Provider} from '../interfaces/IOAuth2Provider';
+import {OAuth2} from '../services/OAuth2';
 
 /**
  * Service Provider for Configurations of the Module
@@ -9,29 +10,30 @@ export class OAuth2Provider implements angular.IServiceProvider, IOAuth2Provider
     private config: Config;
 
     public constructor(config: Config) {
-        this.config  = config;
+        this.config = config;
     }
 
     public configure(config: any) {
-        // TODO: Neet to properly configure stuff
-        // this.config = Config.getConfig();
+        angular.extend(this.config, config);
     }
 
-    public test() {
-        this.config.storageType = 'sessionStorage';
+    public configureFacebook(config: any) {
+        angular.extend(this.config.providers.facebook, config);
     }
 
-    public $get() {
+    public configureGoogle(config: any) {
+        angular.extend(this.config.providers.google, config);
+    }
+
+    public $get(main: OAuth2) {
         return {
-            login: () => {
-                // console.log('In Login');
-            },
+            login: (type: string, user: any) => main.login(type, user),
             logout: () => {
-                // console.log('In Logout');
+                console.log('In Logout');
             }
         };
     }
 
 }
 
-// OAuth2Provider.prototype.$get.$inject = [];
+OAuth2Provider.prototype.$get.$inject = ['main'];
