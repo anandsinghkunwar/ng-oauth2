@@ -49,7 +49,12 @@ export class HttpInterceptor implements angular.IHttpInterceptor {
     public responseError = (responseFailure: any): angular.IPromise<any> => {
         if (responseFailure.status === 401) {
             // FIXME HACK
-            this.$rootScope.$broadcast(this.config.tokenErrorEventName, responseFailure);
+            console.log(responseFailure);
+            if (responseFailure.config.url === this.config.baseUrl + this.config.loginUrl) {
+                this.$rootScope.$broadcast(this.config.loginEventFailureName, responseFailure);
+            } else {
+                this.$rootScope.$broadcast(this.config.tokenErrorEventName, responseFailure);
+            }
         }
         return this.$q.reject(responseFailure);
     }
