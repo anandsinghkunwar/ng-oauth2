@@ -20,6 +20,7 @@ export class Config {
     public storageType = 'localStorage';
     public tokenName = 'AccessToken';
     public refreshTokenName = 'RefreshToken';
+    public refreshTokenUrl = '/refresh';
     public tokenHeader = 'Authorization';
     public tokenType = 'Bearer';
     public tokenErrorEventName = 'oauth2:token:error';

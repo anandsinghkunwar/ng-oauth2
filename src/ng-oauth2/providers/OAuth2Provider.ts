@@ -30,12 +30,13 @@ export class OAuth2Provider implements angular.IServiceProvider, IOAuth2Provider
                 $rootScope: angular.IRootScopeService,
                 main: OAuth2,
                 config: Config,
-                shared: Shared) {
+                shared: Shared,
+                storage: Storage) {
         return {
             login: (type: string, user: any) => main.login(type, user),
             logout: () => {
                 // HACK FIXME
-                $http({
+                return $http({
                     method: config.logoutMethod,
                     url: config.baseUrl + config.logoutUrl
                 })
@@ -45,11 +46,24 @@ export class OAuth2Provider implements angular.IServiceProvider, IOAuth2Provider
                         console.log(errorResponse);
                         $rootScope.$broadcast(config.logoutFailureEventName, errorResponse);
                     });
-                console.log('In Logout');
+            },
+            isAuthenticated: () => {
+                return shared.isTokenSet();
+            },
+            getRefreshToken: () => {
+                // FIXME CHeck if token false is needed. HACK
+                return $http({
+                    method: config.loginMethod,
+                    url: config.baseUrl + config.refreshTokenUrl,
+                    data: {
+                        grant_type: 'refresh_token',
+                        refresh_token: storage.getItem(config.refreshTokenName)
+                    }
+                });
             }
         };
     }
 
 }
 
-OAuth2Provider.prototype.$get.$inject = ['$http', '$rootScope', 'main', 'config', 'shared'];
+OAuth2Provider.prototype.$get.$inject = ['$http', '$rootScope', 'main', 'config', 'shared', 'storage'];

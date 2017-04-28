@@ -46,6 +46,7 @@ var Config = (function () {
         this.storageType = 'localStorage';
         this.tokenName = 'AccessToken';
         this.refreshTokenName = 'RefreshToken';
+        this.refreshTokenUrl = '/refresh';
         this.tokenHeader = 'Authorization';
         this.tokenType = 'Bearer';
         this.tokenErrorEventName = 'oauth2:token:error';
@@ -107,12 +108,12 @@ var OAuth2Provider = (function () {
     OAuth2Provider.prototype.configureGoogle = function (config) {
         angular.extend(this.config.providers.google, config);
     };
-    OAuth2Provider.prototype.$get = function ($http, $rootScope, main, config, shared) {
+    OAuth2Provider.prototype.$get = function ($http, $rootScope, main, config, shared, storage) {
         return {
             login: function (type, user) { return main.login(type, user); },
             logout: function () {
                 // HACK FIXME
-                $http({
+                return $http({
                     method: config.logoutMethod,
                     url: config.baseUrl + config.logoutUrl
                 })
@@ -122,7 +123,20 @@ var OAuth2Provider = (function () {
                     console.log(errorResponse);
                     $rootScope.$broadcast(config.logoutFailureEventName, errorResponse);
                 });
-                console.log('In Logout');
+            },
+            isAuthenticated: function () {
+                return shared.isTokenSet();
+            },
+            getRefreshToken: function () {
+                // FIXME CHeck if token false is needed. HACK
+                return $http({
+                    method: config.loginMethod,
+                    url: config.baseUrl + config.refreshTokenUrl,
+                    data: {
+                        grant_type: 'refresh_token',
+                        refresh_token: storage.getItem(config.refreshTokenName)
+                    }
+                });
             }
         };
     };
@@ -130,7 +144,7 @@ var OAuth2Provider = (function () {
 }());
 OAuth2Provider.$inject = ['config'];
 exports.OAuth2Provider = OAuth2Provider;
-OAuth2Provider.prototype.$get.$inject = ['$http', '$rootScope', 'main', 'config', 'shared'];
+OAuth2Provider.prototype.$get.$inject = ['$http', '$rootScope', 'main', 'config', 'shared', 'storage'];
 
 },{}],4:[function(require,module,exports){
 "use strict";
@@ -461,6 +475,9 @@ var Shared = (function () {
             // FIXME
             this.$rootScope.$broadcast(this.config.logoutEventName, {});
         }
+    };
+    Shared.prototype.isTokenSet = function () {
+        return this.storage.isSet(this.config.tokenName);
     };
     return Shared;
 }());

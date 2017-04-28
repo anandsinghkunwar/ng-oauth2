@@ -49,4 +49,8 @@ export class Shared implements IShared {
             this.$rootScope.$broadcast(this.config.logoutEventName, {});
         }
     }
+
+    public isTokenSet(): boolean {
+        return this.storage.isSet(this.config.tokenName);
+    }
 }

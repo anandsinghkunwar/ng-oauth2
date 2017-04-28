@@ -19,16 +19,24 @@
                     appId: '438920019774256'
                 });
                 $oauth2Provider.configureGoogle({
-                    clientId: '1234567'
+                    clientId: '369854780930-a9io3im0bskcjahgkuk16ikrce9fsngd.apps.googleusercontent.com'
                 });
             })
             .controller('ctrl', function($scope, $http, $oauth2, toastr) {
-                console.log($oauth2);
                 $scope.model = {};
                 $scope.facebook = function() {
                     $oauth2.login('social', {
                         provider: 'facebook'
                     });
+                }
+                $scope.isAuthenticated = function() {
+                    if($oauth2.isAuthenticated()) {
+                        toastr.success('Is Authenticated');
+                    }
+                    else {
+                        toastr.warning('Is Not Authenticated');
+
+                    }
                 }
                 $scope.google = function() {
                     $oauth2.login('social', {
@@ -72,11 +80,11 @@
                 $scope.publicData = function() {
                     $http({
                         method: 'GET',
-                        url: '/google'
-                    }).then({
+                        url: '/publicData'
+                    }).then(
                             function(response) {
                                 toastr.success(response.data, response.code);
-                            }
+
                         },
                         function(response) {
                             toastr.error(response.data, response.code);
@@ -124,7 +132,7 @@
         </div>
 
         <div class="">
-            <button type="button" name="button" ng-click="google()">Google</button>
+            <button type="button" name="button" ng-click="isAuthenticated()">Is Authenticated</button>
         </div>
 
                 <div class="">
@@ -135,7 +143,7 @@
                 </div>
 
                 <div class="">
-                    <button type="button" name="button" ng-click="freeResource()">Free Resource</button>
+                    <button type="button" name="button" ng-click="publicData()">Free Resource</button>
                 </div>
     </form>
 </body>
