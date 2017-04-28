@@ -57,6 +57,7 @@ export class SocialOAuth2 implements ISocialOAuth2 {
 
     public exchangeForToken(code: string): angular.IHttpPromise<any> {
         // const payload = angular.extend({}, userData);
+        let deferred = this.$q.defer();
         let payload: any = {};
         let config: any = this.config;
 
@@ -79,7 +80,19 @@ export class SocialOAuth2 implements ISocialOAuth2 {
 
         let exchangeForTokenUrl = config.baseUrl + config.providers[this.provider].url;
 
-        return this.$http.post(exchangeForTokenUrl, payload);
+        this.$http.post(exchangeForTokenUrl, payload).then(
+            (response: any) => {
+                console.log('Success', response);
+                this.shared.setToken(response);
+                deferred.resolve(response);
+            },
+            (errorResponse: any) => {
+                console.log(errorResponse);
+                deferred.reject(errorResponse);
+            }
+        );
+
+        return deferred.promise;
     }
 
     public buildQueryString(): string {

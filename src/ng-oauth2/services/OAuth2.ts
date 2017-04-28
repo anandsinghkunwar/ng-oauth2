@@ -41,7 +41,7 @@ export class OAuth2 implements IOAuth2 {
                 break;
 
             case 'local':
-                provider = new LocalOAuth2(this.$http, this.config, this.shared);
+                provider = new LocalOAuth2(this.$http, this.$q, this.config, this.shared);
                 break;
 
             default:
